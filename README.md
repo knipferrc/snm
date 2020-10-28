@@ -1,2 +1,3 @@
-# machine-setup
-Setup a new machine
+# SNM (Setup New Machine)
+
+- Setup a new machine
