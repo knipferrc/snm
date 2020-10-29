@@ -20,19 +20,30 @@ proc setupGit() =
   discard execShellCmd("git config --global credential.helper store")
 
 proc setupSoftware() = 
-  echo "\nSetting up software\n"
+  echo "\nSetting up software"
   printSeparator()
 
   stdout.write "Do you want to install nim, [y/N]? "
-  var answer: char = readChar(stdin)
+  var nimAnswer: string = readLine(stdin)
 
-  if answer == 'y' or answer == 'Y':
+  case nimAnswer:
+  of "y", "Y", "yes", "Yes":
     discard execShellCmd("curl https://nim-lang.org/choosenim/init.sh -sSf | sh")
-  elif answer == 'n' or answer == 'N': 
-    return
+  of "n", "N", "No", "no":
+    discard
   else:
-    return
+    discard
 
+  stdout.write "Do you want to install nvm, [y/N]? "
+  var nvmAnswer: string = readLine(stdin)
+
+  case nvmAnswer:
+  of "y", "Y", "yes", "Yes":
+    discard execShellCmd("curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash")
+  of "n", "N", "No", "no":
+    discard
+  else:
+    discard
 
 proc main() = 
   setupGit()
