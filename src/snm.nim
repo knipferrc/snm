@@ -29,8 +29,6 @@ proc setupSoftware() =
   case nimAnswer:
   of "y", "Y", "yes", "Yes":
     discard execShellCmd("curl https://nim-lang.org/choosenim/init.sh -sSf | sh")
-  of "n", "N", "No", "no":
-    discard
   else:
     discard
 
@@ -40,14 +38,50 @@ proc setupSoftware() =
   case nvmAnswer:
   of "y", "Y", "yes", "Yes":
     discard execShellCmd("curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash")
-  of "n", "N", "No", "no":
+  else:
     discard
+
+proc setupHomeDir() = 
+  echo "\nSetting up home directory"
+  printSeparator()
+
+  stdout.write("Do you want to setup your home directory, [y/N]?")
+  var homeDirAnswer: string = readLine(stdin)
+
+  case homeDirAnswer:
+  of "y", "Y", "Yes", "yes":
+    setCurrentDir(getHomeDir())
+    discard existsOrCreateDir("git")
+  else: 
+    discard
+  
+
+proc setupDotfiles() = 
+  echo "\nSetting up dotfiles"
+  printSeparator()
+
+  stdout.write "Do you want to setup dotfiles, [y/N]? "
+  var dotfilesAnswer: string = readLine(stdin)
+
+  case dotfilesAnswer:
+  of "y", "Y", "yes", "Yes":
+    setCurrentDir(getHomeDir())
+    setCurrentDir("test")
+    discard execShellCmd("git clone https://github.com/knipferrc/dotfiles.git")
+    setCurrentDir("dotfiles")
+
+    let dest = fmt"{getHomeDir()}/.vimrc"
+
+    copyFile(".vimrc", dest)
   else:
     discard
 
 proc main() = 
   setupGit()
   setupSoftware()
+  setupHomeDir()
+  setupDotfiles()
 
 when isMainModule:
   main()
+
