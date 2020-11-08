@@ -66,7 +66,7 @@ proc setupDotfiles() =
   case dotfilesAnswer:
   of "y", "Y", "yes", "Yes":
     setCurrentDir(getHomeDir())
-    setCurrentDir("test")
+    setCurrentDir("git")
     discard execShellCmd("git clone https://github.com/knipferrc/dotfiles.git")
     setCurrentDir("dotfiles")
 
