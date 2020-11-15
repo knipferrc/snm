@@ -41,6 +41,15 @@ proc setupSoftware() =
   else:
     discard
 
+  stdout.write "Do you want to install rust, [y/N]? "
+  var rustAnswer: string = readLine(stdin)
+
+  case rustAnswer:
+  of "y", "Y", "yes", "Yes":
+    discard execShellCmd("curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh")
+  else:
+    discard
+
 proc setupHomeDir() = 
   echo "\nSetting up home directory"
   printSeparator()
