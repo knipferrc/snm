@@ -37,7 +37,7 @@ proc setupSoftware() =
 
   case nvmAnswer:
   of "y", "Y", "yes", "Yes":
-    discard execShellCmd("curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash")
+    discard execShellCmd("curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash")
   else:
     discard
 
