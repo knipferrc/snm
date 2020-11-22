@@ -1,5 +1,7 @@
 import os, strformat
 
+const yesAnswer = @["y", "Y", "yes", "Yes"]
+
 proc printSeparator() = 
   echo "############################################"
 
@@ -36,7 +38,7 @@ proc setupSoftware() =
   var nvmAnswer: string = readLine(stdin)
 
   case nvmAnswer:
-  of "y", "Y", "yes", "Yes":
+  of yesAnswer:
     discard execShellCmd("curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash")
   else:
     discard
@@ -45,7 +47,7 @@ proc setupSoftware() =
   var rustAnswer: string = readLine(stdin)
 
   case rustAnswer:
-  of "y", "Y", "yes", "Yes":
+  of yesAnswer:
     discard execShellCmd("curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh")
   else:
     discard
@@ -58,7 +60,7 @@ proc setupHomeDir() =
   var homeDirAnswer: string = readLine(stdin)
 
   case homeDirAnswer:
-  of "y", "Y", "Yes", "yes":
+  of yesAnswer:
     setCurrentDir(getHomeDir())
     discard existsOrCreateDir("git")
   else: 
@@ -73,7 +75,7 @@ proc setupDotfiles() =
   var dotfilesAnswer: string = readLine(stdin)
 
   case dotfilesAnswer:
-  of "y", "Y", "yes", "Yes":
+  of yesAnswer:
     setCurrentDir(getHomeDir())
     setCurrentDir("git")
     discard execShellCmd("git clone https://github.com/knipferrc/dotfiles.git")
